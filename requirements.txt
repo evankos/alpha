@@ -1,0 +1,2 @@
+gdal
+psycopg2
