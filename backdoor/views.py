@@ -40,8 +40,6 @@ class Users(APIView):
     def post(self, request, format=None):
         user = request.validated_object
         user.save()
-        location = Location(user_account=user, point=Point(ast.literal_eval(request.data['point'])))#TODO Security issue with eval
-        location.save()
         return Response(status=status.HTTP_200_OK)
 
     def get_permissions(self):
