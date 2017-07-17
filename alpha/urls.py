@@ -19,9 +19,13 @@ from django.contrib import admin
 # from alpha.authentication import obtain_auth_token//TODO expiring Token
 from rest_framework.authtoken.views import obtain_auth_token
 
+from backdoor import views
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),#TODO register models with admin
     # url(r'^api-auth/',include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api/', include('backdoor.urls')),
-    url(r'^api-token-auth/', obtain_auth_token),
+    url(r'^api-token-auth/', obtain_auth_token)
 ]
+
+

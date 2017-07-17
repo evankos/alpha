@@ -107,7 +107,7 @@ DATABASES = {
     }
 }
 
-
+GDAL_LIBRARY_PATH = 'C:\\Anaconda3\\Library\\bin\\gdal202.dll'
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 

@@ -9,7 +9,10 @@ from . import views
 
 
 urlpatterns = [
-    url(r'^users/',views.ListUsers),
-    url(r'^groups/',views.ListGroups),
-    url(r'^posts/',views.Posts),
+    url(r'^users/', views.users),
+    url(r'^groups/', views.groups),
+    url(r'^posts/',views.posts),
 ]
+
+
+

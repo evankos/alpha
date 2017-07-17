@@ -1,3 +1,4 @@
+from ast import literal_eval
 
 from rest_framework.fields import Field, empty
 from django.contrib.gis.db.models import PointField as GisPointField
@@ -18,6 +19,7 @@ class CoordValidator(BaseValidator):
     code = 'coord_length'
 
     def compare(self, a, b):
+        print("COMPARING!!!")
         return False  #TODO do an actual validation of coordinates
 
     def clean(self, x):
@@ -26,7 +28,7 @@ class CoordValidator(BaseValidator):
 
 class PointField(Field):
     default_error_messages = {
-        'invalid': ('Not a valid string.'),
+        'invalid': ('Not a valid string.!!!'),
         'blank': ('This field may not be blank.'),
         'max_length': ('Ensure this field has no more than {max_length} characters.'),
         'min_length': ('Ensure this field has at least {min_length} characters.')
@@ -36,12 +38,10 @@ class PointField(Field):
     def __init__(self, **kwargs):
         self.allow_blank = kwargs.pop('allow_blank', False)
         self.trim_whitespace = kwargs.pop('trim_whitespace', True)
-        self.max_length = kwargs.pop('max_length', None)
-        self.min_length = kwargs.pop('min_length', None)
         super(PointField, self).__init__(**kwargs)
-        if self.max_length is not None:
-            message = self.error_messages['max_length'].format(max_length=self.max_length)
-            self.validators.append(CoordValidator(self.max_length, message=message))
+        # self.max_length = 5 #TODO make an actual check at some point
+        # message = self.error_messages['max_length'].format(max_length=self.max_length)
+        # self.validators = [CoordValidator(self.max_length, message=message)]
 
 
     def run_validation(self, data=empty):
@@ -52,16 +52,22 @@ class PointField(Field):
             if not self.allow_blank:
                 self.fail('blank')
             return ''
-        return super(PointField, self).run_validation(data)
+        point = super(PointField, self).run_validation(data)
+        return point
+
 
     def to_internal_value(self, data):
         # We're lenient with allowing basic numerics to be coerced into strings,
         # but other types should fail. Eg. unclear if booleans should represent as `true` or `True`,
         # and composites such as lists are likely user error.
-        if not isinstance(data, Point):
+        if isinstance(data, Point):
+            return Point(data)
+        elif type(data) is str:
+            tup = literal_eval(data)
+            return Point(tup)
+        else:
             self.fail('invalid')
 
-        return Point(data)
 
     def to_representation(self, value):
         return value.coords
