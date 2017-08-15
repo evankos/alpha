@@ -65,9 +65,9 @@ class Posts(APIView):
 
     def get(self, request, format=None):
         latlon=request.query_params
-        pnt = GEOSGeometry('SRID=28992;POINT(%s %s)'%(latlon['lat'],latlon['lon']))
-        meters = float(latlon['range'])
-        posts = Post.objects.filter(point__distance_lte=(pnt, meters * 1e-05))
+        pnt = Point(x=float(latlon['lon']), y=float(latlon['lat']), srid=28992)
+        meters = float(latlon['range']) * 1e-05
+        posts = Post.objects.filter(point__distance_lte=(pnt, meters))
         serialized = PostSerializer(posts, many=True)
         return JsonResponse(serialized.data, safe=False)
 

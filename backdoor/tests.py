@@ -16,6 +16,7 @@ class AuthTests(TestCase, CustomAssertions):
         self.normalUser = User.objects.create_user('normal', 'normie@test.com', 'pass')
         self.adminUser = User.objects.create_user('admin', 'admin@test.com', 'pass')
         self.adminUser.is_staff = True
+        self.normalUser.save()
         self.adminUser.save()
 
         self.normalUserToken = Token.objects.get(user=self.normalUser)
