@@ -38,9 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'backdoor.apps.BackdoorConfig',
+    'frontend.apps.FrontendConfig',
     'rest_framework',
     'rest_framework.authtoken',
-    'django.contrib.gis'
+    'django.contrib.gis',
+    'webpack_loader',
 ]
 
 REST_FRAMEWORK = {
@@ -87,27 +89,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'alpha.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/1.11/ref/settings/#databases
-# DATABASE_ROUTERS = ['manager.router.DatabaseAppsRouter']
-# DATABASE_APPS_MAPPING = {'mux_data': 't29_db',
-#                          'T50_VATC':'t50_db'}
-
-DATABASES = {
-    # 'elastic': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    # },
-    'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'alpha',
-        'USER': 'geo',
-        'PASSWORD': '123QWE'
-    }
-}
-
-GDAL_LIBRARY_PATH = 'C:\\Anaconda3\\Library\\bin\\gdal202.dll'
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 
@@ -145,3 +126,67 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.normpath(os.path.join(BASE_DIR, 'static'))
+
+
+# Django Pipeline (and browserify)
+
+
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+]
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'assets'), # We do this so that django's collectstatic copies or our bundles to the STATIC_ROOT or syncs them to whatever storage we use.
+)
+
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'CACHE': not DEBUG,
+        'BUNDLE_DIR_NAME': 'dist/', # must end with slash
+        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
+        'POLL_INTERVAL': 0.1,
+        'TIMEOUT': None,
+        'IGNORE': ['.+\.hot-update.js', '.+\.map']
+    }
+}
+#RUN TO COMPILE JS "node_modules/.bin/webpack" --config webpack.config.js --watch
+
+
+
+
+
+
+
+
+
+
+
+
+# Database
+# https://docs.djangoproject.com/en/1.11/ref/settings/#databases
+# DATABASE_ROUTERS = ['manager.router.DatabaseAppsRouter']
+# DATABASE_APPS_MAPPING = {'mux_data': 't29_db',
+#                          'T50_VATC':'t50_db'}
+
+DATABASES = {
+    # 'elastic': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    # },
+    'default': {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'alpha',
+        'USER': 'geo',
+        'HOST': 'localhost',
+        'PASSWORD': '123QWEqwe!@#'
+    }
+}
+
+# GDAL_LIBRARY_PATH = 'C:\\Anaconda3\\Library\\bin\\gdal202.dll'
+
+
+

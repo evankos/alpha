@@ -14,15 +14,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url, include
-from django.contrib import admin
-# from alpha.authentication import obtain_auth_token//TODO expiring Token
-from django.conf.urls.static import static
-from django.conf import settings
-
+from django.views.generic import TemplateView
+from frontend import views
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),#TODO register models with admin
-    url(r'^api/', include('backdoor.urls')),
-    url(r'^web/', include('frontend.urls'))
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    url(r'^$', views.FrontendView.as_view()),
+]
 
 

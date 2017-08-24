@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load render_bundle from webpack_loader %}
+{% block title %}App{% endblock %}
+
+
+
+{% block content %}
+    <div class="container">
+        <div id="app-container" class="row">
+
+        </div>
+    </div>
+
+{% endblock %}
+{% block page_js %}
+    {% render_bundle 'app' 'js' %}
+{% endblock %}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="dfb2cc07-3bf7-4dc8-851d-c6671893d00a" name="test_instance" url="http://35.189.101.64">
+        <fileTransfer host="35.189.101.64" port="22" privateKey="C:\Users\Vaggelis\PycharmProjects\alpha\ssh\test_instance" accessType="SFTP" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
