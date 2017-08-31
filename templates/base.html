@@ -1,7 +1,7 @@
 {% load render_bundle from webpack_loader %}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <title>{% block title %}{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,13 +11,13 @@
     <!-- styles -->
     {% block page_css %}{% endblock %}
 
-  </head>
-  <body>
+</head>
+<body>
 
-    {% block content %}{% endblock %}
+{% block content %}{% endblock %}
 
-    <!-- JavaScript scripts -->
+<!-- JavaScript scripts -->
 
-    {% block page_js %} {% endblock %}
-  </body>
+{% block page_js %} {% endblock %}
+</body>
 </html>

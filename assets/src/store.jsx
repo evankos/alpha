@@ -9,7 +9,7 @@ import axios from 'axios';
 
 
 const client = axios.create({ //all axios can be used, shown in axios documentation
-    baseURL:'https://35.189.108.141/api/', //TODO remove hardcoded IP
+    baseURL:'/api/',
     responseType: 'json'
 });
 const options = {

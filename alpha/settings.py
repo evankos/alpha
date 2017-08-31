@@ -39,10 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'backdoor.apps.BackdoorConfig',
     'frontend.apps.FrontendConfig',
+    'alpha',
     'rest_framework',
     'rest_framework.authtoken',
     'django.contrib.gis',
     'webpack_loader',
+    'channels',
 ]
 
 REST_FRAMEWORK = {
@@ -160,15 +162,24 @@ WEBPACK_LOADER = {
 
 
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_SSL_HOST = '35.189.108.141'
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# SECURE_SSL_HOST = '35.189.108.141'
+# SECURE_SSL_REDIRECT = True
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
 
 
 
-
+# In settings.py
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'asgi_redis.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('localhost', 6379)],
+        },
+        'ROUTING': 'alpha.routing.channel_routing',
+    }
+}
 
 
 # Database
@@ -186,8 +197,8 @@ DATABASES = {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'alpha',
         'USER': 'geo',
-        'HOST': 'localhost',
-        'PASSWORD': '123QWEqwe!@#'
+        'PASSWORD': '123QWEqwe',
+        'HOST': '35.189.110.164'
     }
 }
 
